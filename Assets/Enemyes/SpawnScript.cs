@@ -53,7 +53,6 @@ public class SpawnScript : MonoBehaviour {
     void Update () {
         if (!CharacterController.poused) {
             if (GameObject.Find("Enemy(Clone)") == null) counter = 0;
-            Debug.Log(remaining);
             if (counter == 0)
             {
                 top = chooseTop();

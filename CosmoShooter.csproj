@@ -79,8 +79,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Enemyes\Basic\movementEnemy.cs" />
+    <Compile Include="Assets\Enemyes\Invulnerable.cs" />
     <Compile Include="Assets\Enemyes\ReturnEnemyies.cs" />
     <Compile Include="Assets\Enemyes\SpawnScript.cs" />
+    <Compile Include="Assets\GameOver\GameOver.cs" />
     <Compile Include="Assets\Player\Scripts\Ammo\Bullets\Moovment.cs" />
     <Compile Include="Assets\Player\Scripts\CharacterController.cs" />
     <Compile Include="Assets\Player\Scripts\Lifes.cs" />

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,8 @@ public class CharacterController : MonoBehaviour {
     public GameObject ammo;
     public float cooldown;
     float timer;
+    Vector2 transformpos;
+    
 
     void Update () {
         if (Input.GetMouseButton(0)){
@@ -25,7 +27,8 @@ public class CharacterController : MonoBehaviour {
                     transform.position = pos;
                     if (timer <= 0){
                         timer = cooldown;
-                        Instantiate(ammo, transform.position, transform.rotation);
+                        transformpos = new Vector2(transform.position.x, transform.position.y + 0.8f);
+                        Instantiate(ammo, transformpos, transform.rotation);
                     }
                 }
             }
@@ -36,7 +39,8 @@ public class CharacterController : MonoBehaviour {
                 transform.position = pos;
                 if (timer <= 0) {
                     timer = cooldown;
-                    Instantiate(ammo, transform.position, transform.rotation);
+                    transformpos = new Vector2(transform.position.x, transform.position.y + 0.8f);
+                    Instantiate(ammo, transformpos, transform.rotation);
                 }
                     
             }

@@ -8,7 +8,16 @@ public class Lifes : MonoBehaviour {
     bool invulnerable = false;
     public float cooldown;
     float timer;
+    public static bool invPlayer;
 
+    private void Update()
+    {
+        timer -= Time.deltaTime;
+        if (timer <= 0) invulnerable = false;
+        else invulnerable = true;
+        if (self.tag == "Player")
+            invPlayer = invulnerable;
+    }
 
     void dropHealth(){
         lives--;
@@ -18,9 +27,7 @@ public class Lifes : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0) invulnerable = false;
-        else invulnerable = true;
+        
 
         if (coll.gameObject.tag == "Wall")
             Destroy(self);
@@ -30,6 +37,7 @@ public class Lifes : MonoBehaviour {
             {
                 if (self.tag == "Player")
                 {
+                    Debug.Log(invulnerable);
                     if (!invulnerable)
                     {
                         timer = cooldown;
