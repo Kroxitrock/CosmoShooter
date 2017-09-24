@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInfo : MonoBehaviour {
     public static GameObject ammo;
     public static float cooldown;
+    public static int aquiredPoints = 0;
 	void Start () {
         ammo = Types.BULLET;
 	}

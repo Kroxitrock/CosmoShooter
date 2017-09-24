@@ -9,6 +9,7 @@ public class Lifes : MonoBehaviour {
     public float cooldown;
     float timer;
     public static bool invPlayer;
+    public static int killed = 0;
 
     private void Update()
     {
@@ -22,7 +23,11 @@ public class Lifes : MonoBehaviour {
     void dropHealth(){
         lives--;
         if (lives <= 0)
+        {
+            if (self.tag == "Enemy")
+                killed++;
             Destroy(self);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D coll)
@@ -37,7 +42,7 @@ public class Lifes : MonoBehaviour {
             {
                 if (self.tag == "Player")
                 {
-                    Debug.Log(invulnerable);
+                    Debug.Log("Inbulnerable : " + invulnerable);
                     if (!invulnerable)
                     {
                         timer = cooldown;
