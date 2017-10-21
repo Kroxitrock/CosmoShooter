@@ -7,7 +7,8 @@ public class SpawnScript : MonoBehaviour {
 
     //Stages and Enemyes----------------------------------------------------------------------------------------------------
     public int stageOne;
-    int stage = 1;
+    int currentStage;
+    public static int stage = 0;
     bool ready;
     public static int remaining = 0;
     public GameObject NormalEnemy;
@@ -112,10 +113,19 @@ public class SpawnScript : MonoBehaviour {
     //Spawn Enemy Functions(end)----------------------------------------------------------------------------------------------------
     int enemyNum;
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (stage == 0)
+        {
+            currentStage = 0;
+            stage++;
+        }
         if (stage == 1 && ready)
         {
+            if(currentStage == 0)
+            {
+                currentStage = stageOne;
+            }
             if (rd.Next(100) > 50)
             {
                 enemyNum = 1;
@@ -126,10 +136,11 @@ public class SpawnScript : MonoBehaviour {
                 Debug.Log("Spawn 2");
                 enemyNum = 2;
             }
-            if (stageOne > 0)
+            if (currentStage > 0)
             {
                 ready = false;
                 howManyToSpawn = 15;
+                currentStage -= howManyToSpawn;
                 remaining = howManyToSpawn;
             }
         }
@@ -143,9 +154,13 @@ public class SpawnScript : MonoBehaviour {
             else
             {
                 SpawnNormallEnemy();
-            } 
-            if (deadpool == Lifes.killed) ready = true;
+            }
+            if (deadpool == Lifes.killed)
+            {
+                ready = true;
+                Debug.Log("Stage " + stage + " compleated! :)" );
+                stage++;
+            }
         }
     }
-
 }

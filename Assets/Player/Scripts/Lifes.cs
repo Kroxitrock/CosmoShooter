@@ -10,6 +10,11 @@ public class Lifes : MonoBehaviour {
     float timer;
     public static bool invPlayer;
     public static int killed = 0;
+    private void Start()
+    {
+        if (self.tag == "Player")
+            ShowDeathScreen.isDead = false;
+    }
 
     private void Update()
     {
@@ -26,6 +31,11 @@ public class Lifes : MonoBehaviour {
         {
             if (self.tag == "Enemy")
                 killed++;
+            if (self.tag == "Player")
+            {
+                ShowDeathScreen.isDead = true;
+                Debug.Log("Killed");
+            }
             Destroy(self);
         }
     }
@@ -42,7 +52,7 @@ public class Lifes : MonoBehaviour {
             {
                 if (self.tag == "Player")
                 {
-                    Debug.Log("Inbulnerable : " + invulnerable);
+                    Debug.Log("Invulnerable : " + invulnerable);
                     if (!invulnerable)
                     {
                         timer = cooldown;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Types{
-    public static GameObject BULLET  = GameObject.Find("Bullet");
-    
-    public static GameObject SHOCKWAVE = GameObject.Find("ShockWave");
+    public static Types BULLET = new Types();
+    public static Types SHOCKWAVE = new Types();
 }

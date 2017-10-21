@@ -7,6 +7,6 @@ public class Extend : MonoBehaviour {
 	
 	void Update () {
         if(transform.localScale.x < 6f && !CharacterController.poused)
-            transform.localScale = new Vector2(transform.localScale.x * ext, transform.localScale.y * ext);
+            transform.localScale = new Vector2(transform.localScale.x + ext, transform.localScale.y + ext);
     }
 }

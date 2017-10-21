@@ -7,6 +7,6 @@ public class Invulnerable : MonoBehaviour {
 	
 	void Update () {
         
-         this.GetComponent<CapsuleCollider2D>().enabled = !Lifes.invPlayer;
+         this.GetComponent<PolygonCollider2D>().enabled = !Lifes.invPlayer;
 	}
 }
