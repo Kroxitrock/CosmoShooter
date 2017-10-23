@@ -46,7 +46,7 @@ public class Lifes : MonoBehaviour {
 
         if (coll.gameObject.tag == "Wall")
             Destroy(self);
-        if (self.tag != "Enemy")
+        else if (self.tag != "Enemy")
         {
             if (coll.gameObject.tag == "Enemy")
             {

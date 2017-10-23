@@ -8,15 +8,18 @@ public class SpawnScript : MonoBehaviour {
     //Stages and Enemyes----------------------------------------------------------------------------------------------------
     public int stageOne;
     int currentStage;
-    public static int stage = 0;
+    public static int stage;
     bool ready;
-    public static int remaining = 0;
+    public static int remaining;
     public GameObject NormalEnemy;
+    public GameObject NormalTopEnemy;
     //Stages and Enemyes(end)----------------------------------------------------------------------------------------------------
 
 
     private void Start()
     {
+        stage = 0;
+        remaining = 0;
         ready = true;
     }
 
@@ -29,9 +32,17 @@ public class SpawnScript : MonoBehaviour {
     public GameObject midRight;
     public GameObject botRight;
 
+    public GameObject ttopLeft;
+    public GameObject ttopCenter;
+    public GameObject ttopRight;
+
     GameObject top;
     GameObject mid;
     GameObject bot;
+
+    GameObject left;
+    GameObject right;
+    GameObject center;
 
     //Spawns(end)----------------------------------------------------------------------------------------------------
 
@@ -40,12 +51,21 @@ public class SpawnScript : MonoBehaviour {
 
     System.Random rd = new System.Random();
 
-    public float cooldown;
+    float cooldown;
     float timer = 0f;
     int deadpool;
 
 
     //Choose Spawns----------------------------------------------------------------------------------------------------
+
+    GameObject choosetTop()
+    {
+        int rand;
+        if ((rand = rd.Next(3)) == 0) return ttopLeft;
+        else if (rand == 1) return ttopCenter;
+        else return ttopRight;
+    }
+
     GameObject chooseTop()
     {
         if (rd.Next(2) == 0) return topLeft;
@@ -110,31 +130,63 @@ public class SpawnScript : MonoBehaviour {
             timer = cooldown;
         }
     }
+
+
+    void SpawnNormallTopEnemy()
+    {
+        GameObject spawnPoint;
+        if (GameObject.Find("TopEnemy(Clone)") == null) counter = 0;
+        if (counter == 0)
+        {
+            if (!startedWaiting)
+            {
+                timerWaiting = 3f;
+                startedWaiting = true;
+            }
+            else
+            {
+                timerWaiting -= Time.deltaTime;
+            }
+        }
+        timer -= Time.deltaTime;
+        if (timer <= 0 && remaining > 0 && counter < 15 && timerWaiting <= 0f)
+        {
+            spawnPoint = choosetTop();
+            startedWaiting = false;
+            Instantiate(NormalTopEnemy, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            remaining--;
+            counter++;
+            timer = cooldown;
+        }
+    }
     //Spawn Enemy Functions(end)----------------------------------------------------------------------------------------------------
     int enemyNum;
 
     private void FixedUpdate()
     {
+        Debug.Log("Ready = " + ready);
+        Debug.Log("Deadpool = " + deadpool);
+        Debug.Log("Killed = " + Lifes.killed);
+
         if (stage == 0)
         {
-            currentStage = 0;
+            currentStage = stageOne;
             stage++;
         }
         if (stage == 1 && ready)
         {
-            if(currentStage == 0)
-            {
-                currentStage = stageOne;
-            }
+            
             if (rd.Next(100) > 50)
             {
                 enemyNum = 1;
                 Debug.Log("Spawn 1");
+                cooldown = 0.2f;
             }
             else
             {
                 Debug.Log("Spawn 2");
                 enemyNum = 2;
+                cooldown = 0.5f;
             }
             if (currentStage > 0)
             {
@@ -142,24 +194,28 @@ public class SpawnScript : MonoBehaviour {
                 howManyToSpawn = 15;
                 currentStage -= howManyToSpawn;
                 remaining = howManyToSpawn;
+                deadpool = howManyToSpawn + Lifes.killed;
+            }
+            else
+            {
+                ready = true;
+                Debug.Log("Stage " + stage + " compleated! :)");
+                stage++;
             }
         }
         if (stage == 1 && !ready)
         {
-            deadpool = howManyToSpawn + Lifes.killed;
             if(enemyNum == 1)
             {
                 SpawnNormallEnemy();
             }
             else
             {
-                SpawnNormallEnemy();
+                SpawnNormallTopEnemy();
             }
             if (deadpool == Lifes.killed)
             {
                 ready = true;
-                Debug.Log("Stage " + stage + " compleated! :)" );
-                stage++;
             }
         }
     }

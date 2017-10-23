@@ -223,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Enemyes\Basic\movementEnemy.cs" />
+    <Compile Include="Assets\Enemyes\Basic\movementTopEnemy.cs" />
     <Compile Include="Assets\Enemyes\Invulnerable.cs" />
     <Compile Include="Assets\Enemyes\ReturnEnemyies.cs" />
     <Compile Include="Assets\Enemyes\SpawnNormallEnemy.cs" />
