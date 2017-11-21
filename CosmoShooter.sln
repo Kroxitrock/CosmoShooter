@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmoShooter", "CosmoShooter.csproj", "{B28EBB4B-4ACB-B56F-12CE-AD796D86EB75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmoShooter.Editor", "CosmoShooter.Editor.csproj", "{448AF1D8-FF7A-7A03-7B45-BE0F02DC91EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{B28EBB4B-4ACB-B56F-12CE-AD796D86EB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B28EBB4B-4ACB-B56F-12CE-AD796D86EB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B28EBB4B-4ACB-B56F-12CE-AD796D86EB75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{448AF1D8-FF7A-7A03-7B45-BE0F02DC91EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{448AF1D8-FF7A-7A03-7B45-BE0F02DC91EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{448AF1D8-FF7A-7A03-7B45-BE0F02DC91EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{448AF1D8-FF7A-7A03-7B45-BE0F02DC91EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

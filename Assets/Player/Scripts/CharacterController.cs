@@ -6,11 +6,13 @@ public class CharacterController : MonoBehaviour {
     GameObject pouseText;
     public static bool poused = false;
     float timer;
+    public static bool pousedForUpgrades = false;
 
     private void Start()
     {
         pouseText = GameObject.Find("Text");
     }
+
     void setTrue()
     {
         poused = true;
@@ -25,21 +27,28 @@ public class CharacterController : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetMouseButton(0))
+        if (pousedForUpgrades)
         {
-
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            if (poused)
+            poused = false;
+            setFalse(new Vector2(0, 0));
+        }else
+        {
+            if (Input.GetMouseButton(0))
             {
-                if ((pos.x <= transform.position.x + 0.5 && pos.x >= transform.position.x - 0.5) && (pos.y <= transform.position.y + 0.8 && pos.y >= transform.position.y - 0.8))
+
+                Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                if (poused)
                 {
-                    poused = false;
-                    setFalse(pos);
+                    if ((pos.x <= transform.position.x + 0.5 && pos.x >= transform.position.x - 0.5) && (pos.y <= transform.position.y + 0.8 && pos.y >= transform.position.y - 0.8))
+                    {
+                        poused = false;
+                        setFalse(pos);
+                    }
                 }
+                else setFalse(pos);
             }
-            else setFalse(pos);
+            else setTrue();
         }
-        else setTrue();
     }
 }

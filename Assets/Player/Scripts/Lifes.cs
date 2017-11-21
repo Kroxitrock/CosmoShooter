@@ -9,11 +9,14 @@ public class Lifes : MonoBehaviour {
     public float cooldown;
     float timer;
     public static bool invPlayer;
-    public static int killed = 0;
+    public static int killed;
     private void Start()
     {
         if (self.tag == "Player")
+        {
+            killed = 0;
             ShowDeathScreen.isDead = false;
+        }
     }
 
     private void Update()
@@ -26,17 +29,30 @@ public class Lifes : MonoBehaviour {
     }
 
     void dropHealth(){
-        lives--;
+        lives--;        
+        
         if (lives <= 0)
         {
             if (self.tag == "Enemy")
+            {
                 killed++;
+                Destroy(self);
+            }
             if (self.tag == "Player")
             {
-                ShowDeathScreen.isDead = true;
-                Debug.Log("Killed");
+                if (lives + Upgrades.getLifesBonus() <= 0)
+                {
+                    ShowDeathScreen.isDead = true;
+                    Debug.Log("Killed");
+
+                    Destroy(self);
+                }
             }
-            Destroy(self);
+            else if (self.tag == "Missle")
+            {
+                if (lives + Upgrades.getProjectileLifeBonus() <= 0)
+                    Destroy(self);
+            }
         }
     }
 

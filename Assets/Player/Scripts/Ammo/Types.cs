@@ -5,4 +5,5 @@ using UnityEngine;
 public class Types{
     public static Types BULLET = new Types();
     public static Types SHOCKWAVE = new Types();
+    public static Types ROCKET = new Types();
 }

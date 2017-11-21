@@ -6,8 +6,8 @@ public class SpawnScript : MonoBehaviour {
 
 
     //Stages and Enemyes----------------------------------------------------------------------------------------------------
-    public int stageOne;
-    int currentStage;
+    public int [] stageSize;
+    int currentStage = 0;
     public static int stage;
     bool ready;
     public static int remaining;
@@ -18,10 +18,20 @@ public class SpawnScript : MonoBehaviour {
 
     private void Start()
     {
+        
         stage = 0;
         remaining = 0;
         ready = true;
+        stageSize = new int[4];
+        stageSize[0] = 0;
+        for (int i = 1; i < 4; i++)
+        {
+            stageSize[i] = 30 + (i * 15);
+            Debug.Log("Stage " + i + ": " + stageSize[i]);
+        }
     }
+
+    
 
 
     //Spawns----------------------------------------------------------------------------------------------------
@@ -53,7 +63,7 @@ public class SpawnScript : MonoBehaviour {
 
     float cooldown;
     float timer = 0f;
-    int deadpool;
+    int deadpool = 0;
 
 
     //Choose Spawns----------------------------------------------------------------------------------------------------
@@ -160,22 +170,13 @@ public class SpawnScript : MonoBehaviour {
         }
     }
     //Spawn Enemy Functions(end)----------------------------------------------------------------------------------------------------
-    int enemyNum;
 
-    private void FixedUpdate()
+    //Choose Enemy------------------------------------------------------------------------------------------------------------------
+    void chooseEnemy()
     {
-        Debug.Log("Ready = " + ready);
-        Debug.Log("Deadpool = " + deadpool);
-        Debug.Log("Killed = " + Lifes.killed);
+        if (stage == 1)
+        {
 
-        if (stage == 0)
-        {
-            currentStage = stageOne;
-            stage++;
-        }
-        if (stage == 1 && ready)
-        {
-            
             if (rd.Next(100) > 50)
             {
                 enemyNum = 1;
@@ -188,35 +189,57 @@ public class SpawnScript : MonoBehaviour {
                 enemyNum = 2;
                 cooldown = 0.5f;
             }
-            if (currentStage > 0)
-            {
-                ready = false;
-                howManyToSpawn = 15;
-                currentStage -= howManyToSpawn;
-                remaining = howManyToSpawn;
-                deadpool = howManyToSpawn + Lifes.killed;
-            }
-            else
-            {
-                ready = true;
-                Debug.Log("Stage " + stage + " compleated! :)");
-                stage++;
-            }
         }
-        if (stage == 1 && !ready)
+    }
+    //Choose Enemy(end)-------------------------------------------------------------------------------------------------------------
+    int enemyNum;
+
+    private void FixedUpdate()
+    {
+        Debug.Log("Ready = " + ready);
+        Debug.Log("Deadpool = " + deadpool);
+        Debug.Log("Killed = " + Lifes.killed);
+
+        if (ready)
         {
-            if(enemyNum == 1)
-            {
-                SpawnNormallEnemy();
-            }
-            else
-            {
-                SpawnNormallTopEnemy();
-            }
+            if(stage != 0)
+                new ChooseUpgrades().initialize();
+            ready = false;
+            stage++;
+            currentStage = stageSize[stage];
+            Debug.Log("Stage = " + stage + "\n StageSize = " + currentStage);
+        }
+        if (!CharacterController.pousedForUpgrades)
+        {
             if (deadpool == Lifes.killed)
             {
-                ready = true;
+                if (currentStage > 0)
+                {
+                    chooseEnemy();
+                    howManyToSpawn = 15;
+                    currentStage -= howManyToSpawn;
+                    remaining = howManyToSpawn;
+                    deadpool = howManyToSpawn + Lifes.killed;
+                }
+                else if (currentStage == 0)
+                {
+                    ready = true;
+                    Debug.Log("Stage " + stage + " compleated! :)");
+                }
+            }
+
+            if (stage == 1 && !ready)
+            {
+                if (enemyNum == 1)
+                {
+                    SpawnNormallEnemy();
+                }
+                else
+                {
+                    SpawnNormallTopEnemy();
+                }
             }
         }
+        
     }
 }

@@ -6,13 +6,14 @@ public class PlayerInfo : MonoBehaviour {
 
     public GameObject BULLET;
     public GameObject SHOCKWAVE;
+    public GameObject ROCKET;
 
-    Types ammoType;
+    public static Types ammoType;
     public static GameObject ammo;
 
     public static float cooldown;
-
-    public static int aquiredPoints = 0;
+    
+    
 
     void Start () {
         ammoType = Types.BULLET;
@@ -30,21 +31,26 @@ public class PlayerInfo : MonoBehaviour {
         {
             Debug.Log("Using shockwaves...");
             ammo = SHOCKWAVE;
+        }else if (ammoType == Types.ROCKET)
+        {
+            Debug.Log("Using rockets...");
+            ammo = ROCKET;
         }
-        
+
     }
-
-
-
+    
     void getCD()
     {
         switch (ammo.name)
         {
             case "Bullet":
-                cooldown = 0.3f;
+                cooldown = 0.3f * Upgrades.getSpeedMultiplier();
                 break;
             case "ShockWave":
-                cooldown = 0.5f;
+                cooldown = 1.25f * Upgrades.getSpeedMultiplier();
+                break;
+            case "Rocket":
+                cooldown = 0.6f * Upgrades.getSpeedMultiplier();
                 break;
         }
     }
