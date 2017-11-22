@@ -66,7 +66,7 @@ public class ChooseUpgrades {
         {
             addUpgrade("Guns");
         }
-        if(Upgrades.getLifesBonus() < 3)
+        if(Upgrades.getLifesBonus() < 2)
         {
             addUpgrade("LifeBonus");
         }

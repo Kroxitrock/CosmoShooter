@@ -10,10 +10,12 @@ public class Lifes : MonoBehaviour {
     float timer;
     public static bool invPlayer;
     public static int killed;
+    public static int PlayerLives;
     private void Start()
     {
         if (self.tag == "Player")
         {
+            PlayerLives = lives;
             killed = 0;
             ShowDeathScreen.isDead = false;
         }
@@ -21,6 +23,10 @@ public class Lifes : MonoBehaviour {
 
     private void Update()
     {
+        if(self.tag == "Player")
+        {
+            PlayerLives = lives;
+        }
         timer -= Time.deltaTime;
         if (timer <= 0) invulnerable = false;
         else invulnerable = true;
