@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lifes : MonoBehaviour {
-    public GameObject self;
+public class Lifes : MonoBehaviour
+{
     public int lives;
     bool invulnerable = false;
     public float cooldown;
@@ -13,7 +13,17 @@ public class Lifes : MonoBehaviour {
     public static int PlayerLives;
     private void Start()
     {
-        if (self.tag == "Player")
+        if(SpawnScript.stage >= 2)
+        {
+            if (gameObject.name == "TopEnemy(Clone)")
+                lives = 2;
+        }
+        if(SpawnScript.stage >= 3)
+        {
+            if (gameObject.name.Contains("Zigzag"))
+                lives = 2;
+        }
+        if (gameObject.tag == "Player")
         {
             PlayerLives = lives;
             killed = 0;
@@ -23,56 +33,60 @@ public class Lifes : MonoBehaviour {
 
     private void Update()
     {
-        if(self.tag == "Player")
+        if (gameObject.tag == "Player")
         {
             PlayerLives = lives;
         }
         timer -= Time.deltaTime;
         if (timer <= 0) invulnerable = false;
         else invulnerable = true;
-        if (self.tag == "Player")
+        if (gameObject.tag == "Player")
             invPlayer = invulnerable;
     }
 
-    void dropHealth(){
-        lives--;        
-        
+    void dropHealth()
+    {
+        lives--;
+
         if (lives <= 0)
         {
-            if (self.tag == "Enemy")
+            if (gameObject.tag == "Enemy")
             {
+                Destroy(gameObject);
                 killed++;
-                Destroy(self);
             }
-            if (self.tag == "Player")
+            if (gameObject.tag == "Player")
             {
                 if (lives + Upgrades.getLifesBonus() <= 0)
                 {
                     ShowDeathScreen.isDead = true;
                     Debug.Log("Killed");
 
-                    Destroy(self);
+                    Destroy(gameObject);
                 }
             }
-            else if (self.tag == "Missle")
+            else if (gameObject.tag == "Missle" || gameObject.tag == "EnemyMissle")
             {
                 if (lives + Upgrades.getProjectileLifeBonus() <= 0)
-                    Destroy(self);
+                    Destroy(gameObject);
             }
+            if (gameObject.name == "Leader(Clone)")
+                MovementComands.isLeaderDead = true;
         }
     }
 
     void OnTriggerEnter2D(Collider2D coll)
     {
-        
-
         if (coll.gameObject.tag == "Wall")
-            Destroy(self);
-        else if (self.tag != "Enemy")
         {
-            if (coll.gameObject.tag == "Enemy")
-            {
-                if (self.tag == "Player")
+            Debug.Log("Wall, " + gameObject.name);
+            Destroy(gameObject);
+
+        }
+        else switch (gameObject.tag)
+        {
+            case "Player":
+                if (coll.gameObject.tag == "Enemy" || coll.gameObject.tag == "EnemyMissle")
                 {
                     Debug.Log("Invulnerable : " + invulnerable);
                     if (!invulnerable)
@@ -81,9 +95,28 @@ public class Lifes : MonoBehaviour {
                         dropHealth();
                     }
                 }
-                else dropHealth();
-            }
+                break;
+            case "Enemy":
+                    Debug.Log(gameObject.name);
+                if (coll.gameObject.tag != "Enemy" && coll.gameObject.tag != "EnemyMissle")
+                {
+                    if ((transform.position.x <= 3.15 && transform.position.x >= -3.15) && (transform.position.y <= 5.05))
+                        dropHealth();
+                }
+                break;
+            case "EnemyMissle":
+                if (coll.gameObject.tag != "Enemy" && coll.gameObject.tag != "EnemyMissle")
+                {
+                        dropHealth();
+                }
+                break;
+            case "Missle":
+                if (coll.gameObject.tag == "Enemy")
+                    dropHealth();
+                break;
+            default:
+                dropHealth();
+                break;
         }
-        else if(coll.gameObject.tag != "Enemy") dropHealth();
     }
 }

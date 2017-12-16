@@ -13,6 +13,10 @@ public class SpawnScript : MonoBehaviour {
     public static int remaining;
     public GameObject NormalEnemy;
     public GameObject NormalTopEnemy;
+    public GameObject Leader;
+    public GameObject Follower;
+    public GameObject ZigzagEnemy;
+    public GameObject Sniper;
     //Stages and Enemyes(end)----------------------------------------------------------------------------------------------------
 
 
@@ -26,7 +30,7 @@ public class SpawnScript : MonoBehaviour {
         stageSize[0] = 0;
         for (int i = 1; i < 4; i++)
         {
-            stageSize[i] = 30 + (i * 15);
+            stageSize[i] = ((i +2) * 9);
             Debug.Log("Stage " + i + ": " + stageSize[i]);
         }
     }
@@ -45,6 +49,9 @@ public class SpawnScript : MonoBehaviour {
     public GameObject ttopLeft;
     public GameObject ttopCenter;
     public GameObject ttopRight;
+
+    public GameObject rightTopCorner;
+    public GameObject leftTopCorner;
 
     GameObject top;
     GameObject mid;
@@ -67,6 +74,21 @@ public class SpawnScript : MonoBehaviour {
 
 
     //Choose Spawns----------------------------------------------------------------------------------------------------
+    GameObject goThroughTop(int gtcounter)
+    {
+        switch (gtcounter)
+        {
+            case 0:
+                return ttopCenter;
+            case 1:
+                return ttopRight;
+            case 2:
+                return ttopLeft;
+            default:
+                return ttopLeft;
+        }
+    }
+
 
     GameObject choosetTop()
     {
@@ -93,6 +115,12 @@ public class SpawnScript : MonoBehaviour {
         if (rd.Next(2) == 0) return botLeft;
         else return botRight;
     }
+
+    GameObject chooseCorner()
+    {
+        if (rd.Next(2) == 0) return leftTopCorner;
+        else return rightTopCorner;
+    }
     //Choose Spawns(end)----------------------------------------------------------------------------------------------------
 
 
@@ -102,9 +130,8 @@ public class SpawnScript : MonoBehaviour {
     float timerWaiting = 1f;
 
     void SpawnNormallEnemy()
-    {
-        
-        if (GameObject.Find("Enemy(Clone)") == null) counter = 0;
+    { 
+        if (GameObject.FindWithTag("Enemy") == null) counter = 0;
         if (counter == 0)
         {
             top = chooseTop();
@@ -112,7 +139,7 @@ public class SpawnScript : MonoBehaviour {
             bot = chooseBot();
             if (!startedWaiting)
             {
-                timerWaiting = 3f;
+                timerWaiting = 0.5f;
                 startedWaiting = true;
             }
             else
@@ -121,7 +148,7 @@ public class SpawnScript : MonoBehaviour {
             }
         }
         timer -= Time.deltaTime;
-        if (timer <= 0 && remaining > 0 && counter < 5 && timerWaiting <= 0f)
+        if (timer <= 0 && remaining > 0 && counter < howManyToSpawn/3 && timerWaiting <= 0f)
         {
             startedWaiting = false;
             Instantiate(NormalEnemy, top.transform.position, top.transform.rotation);
@@ -141,16 +168,17 @@ public class SpawnScript : MonoBehaviour {
         }
     }
 
-
+    private int c;
+    
     void SpawnNormallTopEnemy()
     {
         GameObject spawnPoint;
-        if (GameObject.Find("TopEnemy(Clone)") == null) counter = 0;
+        if (GameObject.FindWithTag("Enemy") == null) counter = 0;
         if (counter == 0)
         {
             if (!startedWaiting)
             {
-                timerWaiting = 3f;
+                timerWaiting = 0.5f;
                 startedWaiting = true;
             }
             else
@@ -159,13 +187,182 @@ public class SpawnScript : MonoBehaviour {
             }
         }
         timer -= Time.deltaTime;
-        if (timer <= 0 && remaining > 0 && counter < 15 && timerWaiting <= 0f)
+
+        
+        if (timer <= 0 && remaining > 0 && counter < howManyToSpawn && timerWaiting <= 0f)
         {
-            spawnPoint = choosetTop();
+            if(stage == 1)
+            { 
+                spawnPoint = choosetTop();
+                startedWaiting = false;
+                Instantiate(NormalTopEnemy, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                remaining--;
+                counter++;
+            }
+            if(stage == 2)
+            {
+                spawnPoint = goThroughTop(c);
+                if (remaining > 0 && counter <= 6)
+                {
+                    Instantiate(NormalTopEnemy, new Vector2(spawnPoint.transform.position.x, spawnPoint.transform.position.y), spawnPoint.transform.rotation);
+                    remaining--;
+                    counter++;
+                }
+                if (remaining > 0 && counter <= 6)
+                {
+                    Instantiate(NormalTopEnemy, new Vector2(spawnPoint.transform.position.x, spawnPoint.transform.position.y + 2), spawnPoint.transform.rotation);
+                    remaining--;
+                    counter++;
+                }
+                c++;
+                if (counter >= 6)
+                    c = -1;
+            }
+            if(stage == 3)
+            {
+                spawnPoint = goThroughTop(c);
+                if (remaining > 0 && counter <= 9)
+                {
+                    Instantiate(NormalTopEnemy, new Vector2(spawnPoint.transform.position.x, spawnPoint.transform.position.y + 1), spawnPoint.transform.rotation);
+                    remaining--;
+                    counter++;
+                }
+                if (remaining > 0 && counter <= 9)
+                {
+                    Instantiate(NormalTopEnemy, new Vector2(spawnPoint.transform.position.x + 1.5f, spawnPoint.transform.position.y), spawnPoint.transform.rotation);
+                    remaining--;
+                    counter++;
+                }
+                if (remaining > 0 && counter <= 9)
+                {
+                    Instantiate(NormalTopEnemy, new Vector2(spawnPoint.transform.position.x - 1.5f, spawnPoint.transform.position.y), spawnPoint.transform.rotation);
+                    remaining--;
+                    counter++;
+                }
+                c++;
+                if(counter >= 9)
+                    c = 0;
+            }
+
+            timer = cooldown;
+        }
+              
+
+    }
+
+    GameObject spawnPoint;
+    void spawnCollumn()
+    {
+
+        if (GameObject.FindWithTag("Enemy") == null) counter = 0;
+        if (counter == 0)
+        {
+            if (!startedWaiting)
+            {
+                timerWaiting = 0.5f;
+                startedWaiting = true;
+            }
+            else
+            {
+                timerWaiting -= Time.deltaTime;
+            }
+        }
+        timer -= Time.deltaTime;
+        if (timer <= 0 && remaining > 0 && counter < howManyToSpawn && timerWaiting <= 0f)
+        {
+
             startedWaiting = false;
-            Instantiate(NormalTopEnemy, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            if (c == 0)
+            {
+                spawnPoint = chooseCorner();
+                Instantiate(Leader, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            }
+            else
+                Instantiate(Follower, spawnPoint.transform.position, spawnPoint.transform.rotation);
             remaining--;
             counter++;
+            c++;
+            timer = cooldown;
+        }
+    }
+
+    void spawnZigzag()
+    {
+
+        if (GameObject.FindWithTag("Enemy") == null) counter = 0;
+        if (counter == 0)
+        {
+            if (!startedWaiting)
+            {
+                timerWaiting = 0.5f;
+                startedWaiting = true;
+            }
+            else
+            {
+                timerWaiting -= Time.deltaTime;
+            }
+        }
+        timer -= Time.deltaTime;
+        if (timer <= 0 && remaining > 0 && counter < howManyToSpawn && timerWaiting <= 0f)
+        {
+            
+            startedWaiting = false;
+            if(stage == 1)
+            {
+                if (c == 0)
+                {
+                    spawnPoint = chooseCorner();
+                }
+                Instantiate(ZigzagEnemy, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                remaining--;
+                counter++;
+                c++;
+            }
+            else
+            {
+                Instantiate(ZigzagEnemy, leftTopCorner.transform.position, leftTopCorner.transform.rotation);
+                remaining--;
+                counter++;
+                if(remaining > 0 && counter < howManyToSpawn)
+                {
+                    Instantiate(ZigzagEnemy, rightTopCorner.transform.position, rightTopCorner.transform.rotation);
+                    remaining--;
+                    counter++;
+                }
+            }
+            timer = cooldown;
+        }
+    }
+    void spawnSniper()
+    {
+        GameObject spawnPoint;
+
+        if (GameObject.FindWithTag("Enemy") == null) counter = 0;
+
+        if (counter == 0)
+        {
+            if (!startedWaiting)
+            {
+                timerWaiting = 0.5f;
+                startedWaiting = true;
+            }
+            else
+            {
+                timerWaiting -= Time.deltaTime;
+            }
+        }
+        timer -= Time.deltaTime;
+
+
+        if (timer <= 0 && remaining > 0 && counter < howManyToSpawn && timerWaiting <= 0f)
+        {
+            spawnPoint = goThroughTop(c);
+            Instantiate(Sniper, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            remaining--;
+            counter++;
+            c++;
+            if (counter >= 3)
+                c = -1;
             timer = cooldown;
         }
     }
@@ -174,25 +371,81 @@ public class SpawnScript : MonoBehaviour {
     //Choose Enemy------------------------------------------------------------------------------------------------------------------
     void chooseEnemy()
     {
-        if (stage == 1)
+        int helper;
+        if ((helper = rd.Next(100)) <= 20)
         {
-
-            if (rd.Next(100) > 50)
+            enemyNum = 1;
+            Debug.Log("Bombers");
+            if (stage == 1)
             {
-                enemyNum = 1;
-                Debug.Log("Spawn 1");
+                howManyToSpawn = 9;
+                cooldown = 1.2f;
+            }
+            else if(stage == 2)
+            {
+                howManyToSpawn = 12;
+                cooldown = 1.4f;
+            }
+        }
+        else if (helper <= 40)
+        {
+            Debug.Log("Fighters");
+            enemyNum = 2;
+            if(stage == 1)
+            {
+                howManyToSpawn = 8;
+                cooldown = 1f;
+            }else if(stage == 2)
+            {
+                c = -1;
+                howManyToSpawn = 6;
+                cooldown = 0.1f;
+            }
+            else if(stage == 3)
+            {
+                c = 0;
+                howManyToSpawn = 9;
+                cooldown = 0;
+            }
+        }
+        else if(helper <= 60)
+        {
+            
+            Debug.Log("Collumn");
+            c = 0;
+            enemyNum = 3;
+            if (stage == 3)
+                howManyToSpawn = 7;
+            else 
+                howManyToSpawn = 5;
+            cooldown = 0.7f;
+        }
+        else if(helper <= 80)
+        {
+            Debug.Log("ZigZag");
+            c = 0;
+            enemyNum = 4;
+            howManyToSpawn = 10;
+            cooldown = 0.8f;
+        }
+        else
+        {
+            Debug.Log("Sniper");
+            c = -1;
+            enemyNum = 5;
+            howManyToSpawn = 3;
+            if (stage < 2)
                 cooldown = 0.2f;
-            }
-            else
-            {
-                Debug.Log("Spawn 2");
-                enemyNum = 2;
-                cooldown = 0.5f;
-            }
+            else cooldown = 0f;
         }
     }
     //Choose Enemy(end)-------------------------------------------------------------------------------------------------------------
     int enemyNum;
+
+    void clearMissles()
+    {
+        GameObject[] em = GameObject.FindGameObjectsWithTag("EnemyMissle");
+    }
 
     private void FixedUpdate()
     {
@@ -202,6 +455,9 @@ public class SpawnScript : MonoBehaviour {
 
         if (ready)
         {
+            Lifes.killed = 0;
+            deadpool = 0;
+            clearMissles();
             if(stage != 0)
                 new ChooseUpgrades().initialize();
             ready = false;
@@ -209,37 +465,45 @@ public class SpawnScript : MonoBehaviour {
             currentStage = stageSize[stage];
             Debug.Log("Stage = " + stage + "\n StageSize = " + currentStage);
         }
-        if (!CharacterController.pousedForUpgrades)
+        if (!CharacterController.pousedForUpgrades) 
         {
-            if (deadpool == Lifes.killed)
+            if (deadpool <= Lifes.killed)
             {
                 if (currentStage > 0)
                 {
                     chooseEnemy();
-                    howManyToSpawn = 15;
                     currentStage -= howManyToSpawn;
                     remaining = howManyToSpawn;
                     deadpool = howManyToSpawn + Lifes.killed;
                 }
-                else if (currentStage == 0)
+                else if (currentStage <= 0)
                 {
                     ready = true;
                     Debug.Log("Stage " + stage + " compleated! :)");
                 }
             }
 
-            if (stage == 1 && !ready)
+            if (!ready)
             {
-                if (enemyNum == 1)
+                switch (enemyNum)
                 {
-                    SpawnNormallEnemy();
-                }
-                else
-                {
-                    SpawnNormallTopEnemy();
+                    case 1:
+                        SpawnNormallEnemy();
+                        break;
+                    case 2:
+                        SpawnNormallTopEnemy();
+                        break;
+                    case 3:
+                        spawnCollumn();
+                        break;
+                    case 4:
+                        spawnZigzag();
+                        break;
+                    case 5:
+                        spawnSniper();
+                        break;
                 }
             }
         }
-        
     }
 }

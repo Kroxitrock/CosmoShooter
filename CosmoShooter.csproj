@@ -228,12 +228,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BackGround\RepeatingBackground.cs" />
+    <Compile Include="Assets\Enemyes\Basic\Bomb_drop.cs" />
+    <Compile Include="Assets\Enemyes\Basic\BomberShooting.cs" />
     <Compile Include="Assets\Enemyes\Basic\movementEnemy.cs" />
     <Compile Include="Assets\Enemyes\Basic\movementTopEnemy.cs" />
+    <Compile Include="Assets\Enemyes\Column\MovementComands.cs" />
+    <Compile Include="Assets\Enemyes\Column\MovementFolllower.cs" />
     <Compile Include="Assets\Enemyes\Invulnerable.cs" />
     <Compile Include="Assets\Enemyes\ReturnEnemyies.cs" />
+    <Compile Include="Assets\Enemyes\Sniper\MoveToPosition.cs" />
+    <Compile Include="Assets\Enemyes\Sniper\SniperShooting.cs" />
     <Compile Include="Assets\Enemyes\SpawnNormallEnemy.cs" />
     <Compile Include="Assets\Enemyes\SpawnScript.cs" />
+    <Compile Include="Assets\Enemyes\ZigZag\ZigZagMovement.cs" />
     <Compile Include="Assets\GameOver\GameOver.cs" />
     <Compile Include="Assets\Player\Lives\ChangeHearths.cs" />
     <Compile Include="Assets\Player\Lives\HideBonusHealth.cs" />

@@ -1,10 +1,11 @@
 ﻿<Properties StartupItem="CosmoShooter.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Enemyes\SpawnScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Enemyes\Basic\Bomb_drop.cs">
     <Files>
       <File FileName="Assets\Player\Scripts\CharacterController.cs" Line="1" Column="1" />
       <File FileName="Assets\Enemyes\SpawnScript.cs" Line="1" Column="1" />
       <File FileName="Assets\Enemyes\SpawnNormallEnemy.cs" Line="1" Column="1" />
+      <File FileName="Assets\Enemyes\Basic\Bomb_drop.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

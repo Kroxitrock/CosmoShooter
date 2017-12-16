@@ -64,7 +64,7 @@ public class Upgrades : MonoBehaviour {
     }
     public static void upGuns()
     {
-        if(guns < 3)
+        if(guns < 5)
             guns += 1;
     }
     public static void upLifesBonus()

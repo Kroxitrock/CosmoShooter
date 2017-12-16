@@ -5,8 +5,16 @@ using UnityEngine;
 public class movementTopEnemy : MonoBehaviour {
 
     public float movementSpeed;
-    void Update()
+    Vector2 dest;
+    void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0, movementSpeed * (-1));
+        dest = new Vector2(transform.position.x, -20);
+    }
+    
+    void FixedUpdate()
+    {
+        if(!CharacterController.poused &&  !CharacterController.pousedForUpgrades)
+
+            transform.position = Vector2.MoveTowards(transform.position, dest, movementSpeed);
     }
 }

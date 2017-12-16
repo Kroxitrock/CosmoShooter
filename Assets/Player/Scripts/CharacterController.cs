@@ -7,10 +7,11 @@ public class CharacterController : MonoBehaviour {
     public static bool poused = false;
     float timer;
     public static bool pousedForUpgrades = false;
-
+    public static Vector2 PlayerPos;
     private void Start()
     {
         pouseText = GameObject.Find("Text");
+        setTrue();
     }
 
     void setTrue()
@@ -27,6 +28,7 @@ public class CharacterController : MonoBehaviour {
     }
 
     void Update () {
+        PlayerPos = transform.position;
         if (pousedForUpgrades)
         {
             poused = false;

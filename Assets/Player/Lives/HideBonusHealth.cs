@@ -9,7 +9,6 @@ public class HideBonusHealth : MonoBehaviour {
 	void Update () {
         string name = transform.name;
         name = name.Substring(6);
-        Debug.Log(name);
         int id = Convert.ToInt32(name);
         id -= 3;
         
