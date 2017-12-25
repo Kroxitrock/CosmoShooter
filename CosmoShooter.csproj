@@ -228,15 +228,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BackGround\RepeatingBackground.cs" />
+    <Compile Include="Assets\Art\BackGround\RepeatingBackground.cs" />
     <Compile Include="Assets\Enemyes\Basic\Bomb_drop.cs" />
     <Compile Include="Assets\Enemyes\Basic\BomberShooting.cs" />
     <Compile Include="Assets\Enemyes\Basic\movementEnemy.cs" />
     <Compile Include="Assets\Enemyes\Basic\movementTopEnemy.cs" />
+    <Compile Include="Assets\Enemyes\BeamBoss\ShootingBeamBoss.cs" />
+    <Compile Include="Assets\Enemyes\BoomerangBoss\MovementBoomerang.cs" />
+    <Compile Include="Assets\Enemyes\BoomerangBoss\Position.cs" />
+    <Compile Include="Assets\Enemyes\BoomerangBoss\ShootingBoomerangs.cs" />
     <Compile Include="Assets\Enemyes\Column\MovementComands.cs" />
     <Compile Include="Assets\Enemyes\Column\MovementFolllower.cs" />
     <Compile Include="Assets\Enemyes\Invulnerable.cs" />
+    <Compile Include="Assets\Enemyes\LaserBoss\LaserMovement.cs" />
+    <Compile Include="Assets\Enemyes\LaserBoss\SelectiveShooting.cs" />
     <Compile Include="Assets\Enemyes\ReturnEnemyies.cs" />
+    <Compile Include="Assets\Enemyes\Shotboss\MovementShotboss.cs" />
+    <Compile Include="Assets\Enemyes\Shotboss\RemoveChildren.cs" />
+    <Compile Include="Assets\Enemyes\Shotboss\ShootingShotboss.cs" />
     <Compile Include="Assets\Enemyes\Sniper\MoveToPosition.cs" />
     <Compile Include="Assets\Enemyes\Sniper\SniperShooting.cs" />
     <Compile Include="Assets\Enemyes\SpawnNormallEnemy.cs" />

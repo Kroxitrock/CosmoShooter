@@ -50,28 +50,31 @@ public class Lifes : MonoBehaviour
 
         if (lives <= 0)
         {
-            if (gameObject.tag == "Enemy")
-            {
-                Destroy(gameObject);
-                killed++;
-            }
-            if (gameObject.tag == "Player")
-            {
-                if (lives + Upgrades.getLifesBonus() <= 0)
-                {
-                    ShowDeathScreen.isDead = true;
-                    Debug.Log("Killed");
-
-                    Destroy(gameObject);
-                }
-            }
-            else if (gameObject.tag == "Missle" || gameObject.tag == "EnemyMissle")
-            {
-                if (lives + Upgrades.getProjectileLifeBonus() <= 0)
-                    Destroy(gameObject);
-            }
             if (gameObject.name == "Leader(Clone)")
                 MovementComands.isLeaderDead = true;
+            switch (gameObject.tag)
+            {
+                case "Enemy":
+                    Destroy(gameObject);
+                    killed++;
+                    break;
+                case "Player":
+                    if (lives + Upgrades.getLifesBonus() <= 0)
+                    {
+                        ShowDeathScreen.isDead = true;
+                        Debug.Log("Killed");
+
+                        Destroy(gameObject);
+                    }
+                    break;
+                case "Missle":
+                    if (lives + Upgrades.getProjectileLifeBonus() <= 0)
+                        Destroy(gameObject);
+                    break;
+                default:
+                    Destroy(gameObject);
+                    break;
+            }
         }
     }
 
@@ -105,7 +108,7 @@ public class Lifes : MonoBehaviour
                 }
                 break;
             case "EnemyMissle":
-                if (coll.gameObject.tag != "Enemy" && coll.gameObject.tag != "EnemyMissle")
+                if (coll.gameObject.tag != "Enemy" && coll.gameObject.tag != "EnemyMissle" && coll.gameObject.tag != "Missle")
                 {
                         dropHealth();
                 }

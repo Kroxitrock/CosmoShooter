@@ -372,7 +372,14 @@ public class SpawnScript : MonoBehaviour {
     void chooseEnemy()
     {
         int helper;
-        if ((helper = rd.Next(100)) <= 20)
+        /*if(Lifes.killed == 0)
+            if(rd.Next(100) <= 4)
+            {
+                Debug.Log("MiniBoss");
+                enemyNum = 101;
+                howManyToSpawn = currentStage;
+            }
+        else*/ if ((helper = rd.Next(100)) <= 20)
         {
             enemyNum = 1;
             Debug.Log("Bombers");

@@ -34,10 +34,10 @@ public class Shooting : MonoBehaviour {
                 }
                 if (Upgrades.getGuns() > 3)
                 {
-                    transformpos = new Vector2(transform.position.x + 0.4f, transform.position.y);
+                    transformpos = new Vector2(transform.position.x + 0.4f, transform.position.y + 0.2f);
                     try { Instantiate(PlayerInfo.ammo, transformpos, transform.rotation); }
                     catch { }
-                    transformpos = new Vector2(transform.position.x - 0.4f, transform.position.y);
+                    transformpos = new Vector2(transform.position.x - 0.4f, transform.position.y + 0.2f);
                     try { Instantiate(PlayerInfo.ammo, transformpos, transform.rotation); }
                     catch { }
                 }

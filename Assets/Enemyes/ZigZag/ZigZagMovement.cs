@@ -8,7 +8,7 @@ public class ZigZagMovement : MonoBehaviour {
     float x2;
     float x;
     float _x;
-    Vector2 pos;
+    Vector3 pos;
 
 
 	void Start () {
@@ -36,17 +36,26 @@ public class ZigZagMovement : MonoBehaviour {
         else x = x2;
         return x;
     }
-    Vector2 getdest()
+    Vector3 getdest()
     {
         if (SpawnScript.stage <= 1)
-            return new Vector2(revertX(), getY());
-        return new Vector2(changeX(), getY());
+            return new Vector3(revertX(), getY());
+        return new Vector3(changeX(), getY());
     }
-
-	// Update is called once per frame
-	void FixedUpdate () {
-        if (Vector2.Distance(pos, transform.position) <= 0.01 )
+    void rotate()
+    {
+        Vector3 moveDirection = gameObject.transform.position - pos;
+        if (moveDirection != Vector3.zero)
+        {
+            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg + 90f;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+    }
+    // Update is called once per frame
+    void FixedUpdate () {
+        if (Vector3.Distance(pos, transform.position) <= 0.01 )
             pos = getdest();
-        transform.position = Vector2.MoveTowards(transform.position, pos, speed);
+        transform.position = Vector3.MoveTowards(transform.position, pos, speed);
+        rotate();
     }
 }
