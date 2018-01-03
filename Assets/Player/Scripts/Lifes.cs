@@ -18,7 +18,7 @@ public class Lifes : MonoBehaviour
             if (gameObject.name == "TopEnemy(Clone)")
                 lives = 2;
         }
-        if(SpawnScript.stage >= 3)
+        if(SpawnScript.stage >= 4)
         {
             if (gameObject.name.Contains("Zigzag"))
                 lives = 2;
@@ -55,6 +55,8 @@ public class Lifes : MonoBehaviour
             switch (gameObject.tag)
             {
                 case "Enemy":
+                    if (transform.name.Contains("Boss"))
+                        SpawnScript.KillBoss(SpawnScript.stage);
                     Destroy(gameObject);
                     killed++;
                     break;

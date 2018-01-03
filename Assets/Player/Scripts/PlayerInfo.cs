@@ -16,7 +16,7 @@ public class PlayerInfo : MonoBehaviour {
     
 
     void Start () {
-        ammoType = Types.BULLET;
+        ammoType = Types.SHOCKWAVE;
 	}
 
 

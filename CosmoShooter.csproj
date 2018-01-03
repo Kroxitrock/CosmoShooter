@@ -229,6 +229,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Art\BackGround\RepeatingBackground.cs" />
+    <Compile Include="Assets\AudioManager\AudioManager.cs" />
+    <Compile Include="Assets\AudioManager\DestroyAfter.cs" />
+    <Compile Include="Assets\AudioManager\Sound.cs" />
     <Compile Include="Assets\Enemyes\Basic\Bomb_drop.cs" />
     <Compile Include="Assets\Enemyes\Basic\BomberShooting.cs" />
     <Compile Include="Assets\Enemyes\Basic\movementEnemy.cs" />
@@ -239,9 +242,11 @@
     <Compile Include="Assets\Enemyes\BoomerangBoss\ShootingBoomerangs.cs" />
     <Compile Include="Assets\Enemyes\Column\MovementComands.cs" />
     <Compile Include="Assets\Enemyes\Column\MovementFolllower.cs" />
+    <Compile Include="Assets\Enemyes\HomingRocketBoss\HomingLaser.cs" />
     <Compile Include="Assets\Enemyes\Invulnerable.cs" />
     <Compile Include="Assets\Enemyes\LaserBoss\LaserMovement.cs" />
     <Compile Include="Assets\Enemyes\LaserBoss\SelectiveShooting.cs" />
+    <Compile Include="Assets\Enemyes\RamBoss\MovementRamBoss.cs" />
     <Compile Include="Assets\Enemyes\ReturnEnemyies.cs" />
     <Compile Include="Assets\Enemyes\Shotboss\MovementShotboss.cs" />
     <Compile Include="Assets\Enemyes\Shotboss\RemoveChildren.cs" />

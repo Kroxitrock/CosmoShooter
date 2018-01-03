@@ -11,12 +11,12 @@ public class MovementComands : MonoBehaviour {
     bool foundDestination;
     Vector3 dest;
 
-    void follow(Vector2 target)
+    void Follow(Vector2 target)
     { 
         transform.position = Vector3.MoveTowards(transform.position, target, speed);
     }
 
-    void chooseRandom()
+    void ChooseRandom()
     {
 
         if (!foundDestination)
@@ -24,21 +24,21 @@ public class MovementComands : MonoBehaviour {
             dest = new Vector2((float)rd.Next(-310, 310) / 100f, (float)rd.Next(-500, 500) / 100f);
             foundDestination = true;
         }
-        follow(dest);
+        Follow(dest);
         if (Vector2.Distance(pos, transform.position) <= 0.02)
             foundDestination = false;
 
     }
-    void followPlayer()
+    void FollowPlayer()
     {
-        follow(CharacterController.PlayerPos);
+        Follow(CharacterController.PlayerPos);
     }
 
     private void Start()
     {
         isLeaderDead = false;
     }
-    void rotate()
+    void Rotate()
     {
         Vector3 moveDirection = gameObject.transform.position - dest;
         if (moveDirection != Vector3.zero)
@@ -49,16 +49,18 @@ public class MovementComands : MonoBehaviour {
     }
 
     void FixedUpdate () {
-        if(!CharacterController.poused)
-        switch (SpawnScript.stage) {
-            case 1:
-                chooseRandom();
-                break;
-            default:
-                followPlayer();
-                break;
+        if (!CharacterController.poused)
+        {
+            if (SpawnScript.stage <= 3)
+            {
+                ChooseRandom();
+            }
+            else
+            {
+                FollowPlayer();
+            }
         }
-        rotate();
+        Rotate();
         pos = transform.position;
     }
 }

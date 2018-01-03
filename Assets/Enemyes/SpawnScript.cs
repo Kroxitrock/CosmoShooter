@@ -22,13 +22,22 @@ public class SpawnScript : MonoBehaviour {
 
     private void Start()
     {
-        
+
+        bossPool = new bool[4];
+        for (int i = 0; i < 4; i++)
+            bossPool[i] = true;
+        boss = new bool[5];
+        for (int i = 0; i < 5; i++)
+            boss[i] = false;
+        spawned = new bool[5];
+        for (int i = 0; i < 5; i++)
+            spawned[i] = false;
         stage = 0;
         remaining = 0;
         ready = true;
-        stageSize = new int[4];
+        stageSize = new int[6];
         stageSize[0] = 0;
-        for (int i = 1; i < 4; i++)
+        for (int i = 1; i < 6; i++)
         {
             stageSize[i] = ((i +2) * 9);
             Debug.Log("Stage " + i + ": " + stageSize[i]);
@@ -191,7 +200,7 @@ public class SpawnScript : MonoBehaviour {
         
         if (timer <= 0 && remaining > 0 && counter < howManyToSpawn && timerWaiting <= 0f)
         {
-            if(stage == 1)
+            if(stage < 3)
             { 
                 spawnPoint = choosetTop();
                 startedWaiting = false;
@@ -199,7 +208,7 @@ public class SpawnScript : MonoBehaviour {
                 remaining--;
                 counter++;
             }
-            if(stage == 2)
+            else if(stage < 5)
             {
                 spawnPoint = goThroughTop(c);
                 if (remaining > 0 && counter <= 6)
@@ -218,7 +227,7 @@ public class SpawnScript : MonoBehaviour {
                 if (counter >= 6)
                     c = -1;
             }
-            if(stage == 3)
+            else
             {
                 spawnPoint = goThroughTop(c);
                 if (remaining > 0 && counter <= 9)
@@ -307,7 +316,7 @@ public class SpawnScript : MonoBehaviour {
         {
             
             startedWaiting = false;
-            if(stage == 1)
+            if(stage < 4)
             {
                 if (c == 0)
                 {
@@ -368,18 +377,93 @@ public class SpawnScript : MonoBehaviour {
     }
     //Spawn Enemy Functions(end)----------------------------------------------------------------------------------------------------
 
+
+
+    //BossHandler-------------------------------------------------------------------------------------------------------------------
+    static bool[] boss;
+    bool[] spawned;
+
+    public GameObject RamBoss;
+    public GameObject ShotBoss;
+    public GameObject BeamBoss;
+    public GameObject LaserBoss;
+    public GameObject BoomerangBoss;
+    public GameObject HomingRocketBoss;
+
+    public GameObject bossSpawnPoint;
+    
+
+    bool[] bossPool;
+    
+    bool IsBossDead(int stage)
+    {
+        return boss[stage - 1];
+    }
+    bool IsBossSpawned(int stage)
+    {
+        return spawned[stage - 1];
+    }
+    public static void KillBoss(int stage)
+    {
+        boss[stage - 1] = true;
+    }
+    void ChooseBoss()
+    {
+        int bosses = 4;
+        for (int i = 0; i < bossPool.Length; i++)
+        {
+            if (bossPool[i] == false) bosses--;
+        }
+        int[] BossPool = new int[bosses];
+        int c = 0;
+        for (int i = 0; i < bossPool.Length; i++)
+        {
+            if (bossPool[i] == true)
+            {
+                BossPool[c] = i;
+                c++;
+            }
+        }
+        switch (BossPool[rd.Next(0, BossPool.Length)])
+        {
+            case 0:
+                bossPool[0] = false;
+                Instantiate(ShotBoss, bossSpawnPoint.transform.position, bossSpawnPoint.transform.rotation);
+                break;
+            case 1:
+                bossPool[1] = false;
+                Instantiate(BeamBoss, bossSpawnPoint.transform.position, bossSpawnPoint.transform.rotation);
+                break;
+            case 2:
+                bossPool[2] = false;
+                Instantiate(LaserBoss, bossSpawnPoint.transform.position, bossSpawnPoint.transform.rotation);
+                break;
+            case 3:
+                bossPool[3] = false;
+                Instantiate(BoomerangBoss, spawnPoint.transform.position, bossSpawnPoint.transform.rotation);
+                break;
+        }
+    }
+
+    void SpawnBoss(int stage)
+    {
+        if (stage == 1)
+            Instantiate(RamBoss, bossSpawnPoint.transform.position, bossSpawnPoint.transform.rotation);
+        else if (stage == 5)
+            Instantiate(HomingRocketBoss, bossSpawnPoint.transform.position, bossSpawnPoint.transform.rotation);
+        else
+            ChooseBoss();
+        spawned[stage - 1] = true;
+    }
+    //BossHandler-------------------------------------------------------------------------------------------------------------------
+
+
+
     //Choose Enemy------------------------------------------------------------------------------------------------------------------
     void chooseEnemy()
     {
         int helper;
-        /*if(Lifes.killed == 0)
-            if(rd.Next(100) <= 4)
-            {
-                Debug.Log("MiniBoss");
-                enemyNum = 101;
-                howManyToSpawn = currentStage;
-            }
-        else*/ if ((helper = rd.Next(100)) <= 20)
+        if ((helper = rd.Next(100)) <= 20)
         {
             enemyNum = 1;
             Debug.Log("Bombers");
@@ -388,7 +472,7 @@ public class SpawnScript : MonoBehaviour {
                 howManyToSpawn = 9;
                 cooldown = 1.2f;
             }
-            else if(stage == 2)
+            else if(stage >= 2)
             {
                 howManyToSpawn = 12;
                 cooldown = 1.4f;
@@ -398,17 +482,17 @@ public class SpawnScript : MonoBehaviour {
         {
             Debug.Log("Fighters");
             enemyNum = 2;
-            if(stage == 1)
+            if(stage < 3)
             {
                 howManyToSpawn = 8;
                 cooldown = 1f;
-            }else if(stage == 2)
+            }else if(stage == 3 || stage == 4)
             {
                 c = -1;
                 howManyToSpawn = 6;
                 cooldown = 0.1f;
             }
-            else if(stage == 3)
+            else if(stage == 5)
             {
                 c = 0;
                 howManyToSpawn = 9;
@@ -421,7 +505,7 @@ public class SpawnScript : MonoBehaviour {
             Debug.Log("Collumn");
             c = 0;
             enemyNum = 3;
-            if (stage == 3)
+            if (stage >= 4)
                 howManyToSpawn = 7;
             else 
                 howManyToSpawn = 5;
@@ -441,7 +525,7 @@ public class SpawnScript : MonoBehaviour {
             c = -1;
             enemyNum = 5;
             howManyToSpawn = 3;
-            if (stage < 2)
+            if (stage < 3)
                 cooldown = 0.2f;
             else cooldown = 0f;
         }
@@ -453,24 +537,39 @@ public class SpawnScript : MonoBehaviour {
     {
         GameObject[] em = GameObject.FindGameObjectsWithTag("EnemyMissle");
     }
-
+    void reset()
+    {
+        Lifes.killed = 0;
+        deadpool = 0;
+        clearMissles();
+    }
+    void UpStage()
+    {
+        ready = false;
+        stage++;
+        currentStage = stageSize[stage];
+        Debug.Log("Stage = " + stage + "\n StageSize = " + currentStage);
+    }
     private void FixedUpdate()
     {
         Debug.Log("Ready = " + ready);
         Debug.Log("Deadpool = " + deadpool);
         Debug.Log("Killed = " + Lifes.killed);
 
-        if (ready)
+        if (ready && stage < 5)
         {
-            Lifes.killed = 0;
-            deadpool = 0;
-            clearMissles();
-            if(stage != 0)
+            if (stage == 0)
+                UpStage();
+            else if (IsBossDead(stage))
+            {
+                reset();
                 new ChooseUpgrades().initialize();
-            ready = false;
-            stage++;
-            currentStage = stageSize[stage];
-            Debug.Log("Stage = " + stage + "\n StageSize = " + currentStage);
+                UpStage();
+            }
+            else if(!IsBossSpawned(stage))
+            {
+                SpawnBoss(stage);
+            }
         }
         if (!CharacterController.pousedForUpgrades) 
         {

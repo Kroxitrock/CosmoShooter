@@ -38,7 +38,7 @@ public class ZigZagMovement : MonoBehaviour {
     }
     Vector3 getdest()
     {
-        if (SpawnScript.stage <= 1)
+        if (SpawnScript.stage < 4)
             return new Vector3(revertX(), getY());
         return new Vector3(changeX(), getY());
     }
