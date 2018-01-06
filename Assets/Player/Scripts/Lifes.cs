@@ -50,8 +50,14 @@ public class Lifes : MonoBehaviour
 
         if (lives <= 0)
         {
+
             if (gameObject.name == "Leader(Clone)")
                 MovementComands.isLeaderDead = true;
+            if (gameObject.tag != "Missle" && gameObject.tag != "EnemyMissle" && gameObject.tag != "Player")
+            {
+                FindObjectOfType<AudioManager>().Play("ExplosionSound");
+                FindObjectOfType<Explosion>().Explode(transform.position, gameObject.GetComponent<SpriteRenderer>().size);
+            }
             switch (gameObject.tag)
             {
                 case "Enemy":
@@ -63,9 +69,12 @@ public class Lifes : MonoBehaviour
                 case "Player":
                     if (lives + Upgrades.getLifesBonus() <= 0)
                     {
-                        ShowDeathScreen.isDead = true;
-                        Debug.Log("Killed");
 
+                        ShowDeathScreen.isDead = true;
+                        FindObjectOfType<ShowDeathScreen>().EndGame();
+                        Debug.Log("Killed");
+                        FindObjectOfType<AudioManager>().Play("ExplosionSound");
+                        FindObjectOfType<Explosion>().Explode(transform.position, gameObject.GetComponent<SpriteRenderer>().size);
                         Destroy(gameObject);
                     }
                     break;

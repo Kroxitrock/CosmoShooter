@@ -22,7 +22,7 @@ public class SpawnScript : MonoBehaviour {
 
     private void Start()
     {
-
+        ShowDeathScreen.isDead = false;
         bossPool = new bool[4];
         for (int i = 0; i < 4; i++)
             bossPool[i] = true;
@@ -555,8 +555,9 @@ public class SpawnScript : MonoBehaviour {
         Debug.Log("Ready = " + ready);
         Debug.Log("Deadpool = " + deadpool);
         Debug.Log("Killed = " + Lifes.killed);
-
-        if (ready && stage < 5)
+        if (stage == 6)
+            FindObjectOfType<ShowDeathScreen>().EndGame();
+        if (ready && stage < 6)
         {
             if (stage == 0)
                 UpStage();

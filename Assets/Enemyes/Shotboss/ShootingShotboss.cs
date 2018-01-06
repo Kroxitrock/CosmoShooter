@@ -8,11 +8,12 @@ public class ShootingShotboss : MonoBehaviour {
     float timer;
     float y = -15;
     public GameObject missle;
-    public GameObject holder;
+    GameObject holder;
 
     void Start () {
         timer = 0f;
-	}
+        holder = GameObject.Find("Holder");
+    }
 
 
     Vector2 getDest(float x)

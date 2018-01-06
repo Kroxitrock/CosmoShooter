@@ -11,9 +11,4 @@ public class GameOver : MonoBehaviour {
     {
             Instantiate(player, startingPosition.transform.position, startingPosition.transform.rotation);
     }
-    private void Update()
-    {
-        if(SpawnScript.stage == 0)
-            Instantiate(player, startingPosition.transform.position, startingPosition.transform.rotation);
-    }
 }

@@ -31,4 +31,11 @@ public class AudioManager : MonoBehaviour {
             }
         }
     }
+
+    private void Update()
+    {
+        if (!Toggle.toggle)
+            AudioListener.volume = 0;
+        else AudioListener.volume = 1;
+    }
 }
