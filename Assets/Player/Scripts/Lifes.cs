@@ -28,10 +28,11 @@ public class Lifes : MonoBehaviour
             PlayerLives = lives;
             killed = 0;
             ShowDeathScreen.isDead = false;
+            invPlayer = false;
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (gameObject.tag == "Player")
         {
@@ -56,7 +57,7 @@ public class Lifes : MonoBehaviour
             if (gameObject.tag != "Missle" && gameObject.tag != "EnemyMissle" && gameObject.tag != "Player")
             {
                 FindObjectOfType<AudioManager>().Play("ExplosionSound");
-                FindObjectOfType<Explosion>().Explode(transform.position, gameObject.GetComponent<SpriteRenderer>().size);
+                FindObjectOfType<Explosion>().Explode(transform.position, gameObject.name);
             }
             switch (gameObject.tag)
             {
@@ -74,7 +75,7 @@ public class Lifes : MonoBehaviour
                         FindObjectOfType<ShowDeathScreen>().EndGame();
                         Debug.Log("Killed");
                         FindObjectOfType<AudioManager>().Play("ExplosionSound");
-                        FindObjectOfType<Explosion>().Explode(transform.position, gameObject.GetComponent<SpriteRenderer>().size);
+                        FindObjectOfType<Explosion>().Explode(transform.position, "Player");
                         Destroy(gameObject);
                     }
                     break;
@@ -121,12 +122,16 @@ public class Lifes : MonoBehaviour
             case "EnemyMissle":
                 if (coll.gameObject.tag != "Enemy" && coll.gameObject.tag != "EnemyMissle" && coll.gameObject.tag != "Missle")
                 {
+                        FindObjectOfType<Explosion>().hit(transform.position);
                         dropHealth();
                 }
                 break;
             case "Missle":
                 if (coll.gameObject.tag == "Enemy")
+                {
+                    FindObjectOfType<Explosion>().hit(transform.position);
                     dropHealth();
+                }
                 break;
             default:
                 dropHealth();

@@ -262,7 +262,7 @@
     <Compile Include="Assets\GameManager\Explosion.cs" />
     <Compile Include="Assets\GameManager\Instance.cs" />
     <Compile Include="Assets\GameOver\GameOver.cs" />
-    <Compile Include="Assets\Player\Lives\ChangeHearths.cs" />
+    <Compile Include="Assets\Player\Lives\ChangeImageHearths.cs" />
     <Compile Include="Assets\Player\Lives\HideBonusHealth.cs" />
     <Compile Include="Assets\Player\Lives\ShowBonusLives.cs" />
     <Compile Include="Assets\Player\Scripts\Ammo\Bullets\Moovment.cs" />

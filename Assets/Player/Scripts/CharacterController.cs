@@ -2,26 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour {
+public class CharacterController : MonoBehaviour{
+    GameObject soundToggle;
     GameObject pouseText;
     public static bool poused = false;
     float timer;
-    public static bool pousedForUpgrades = false;
+    public static bool pousedForUpgrades;
     public static Vector2 PlayerPos;
-    private void Start()
+    private void Awake()
     {
+        soundToggle = GameObject.Find("SoundToggle");
         pouseText = GameObject.Find("Text");
         setTrue();
+    }
+
+    private void Start()
+    {
+        pousedForUpgrades = false;
     }
 
     void setTrue()
     {
         poused = true;
         Time.timeScale = 0;
+        soundToggle.SetActive(true);
         pouseText.SetActive(true);
     }
     void setFalse(Vector2 pos)
     {
+        soundToggle.SetActive(false);
         pouseText.SetActive(false);
         Time.timeScale = 1;
         transform.position = pos;
