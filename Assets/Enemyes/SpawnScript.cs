@@ -39,7 +39,7 @@ public class SpawnScript : MonoBehaviour {
         stageSize[0] = 0;
         for (int i = 1; i < 6; i++)
         {
-            stageSize[i] = ((i +2) * 9);
+            stageSize[i] = ((i + 3) * 8);
             Debug.Log("Stage " + i + ": " + stageSize[i]);
         }
     }

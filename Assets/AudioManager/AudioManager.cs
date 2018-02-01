@@ -2,6 +2,7 @@
 
 public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
+
     //public AudioMixerGroup mixerGroup;
 
     public GameObject[] sounds;
@@ -16,7 +17,8 @@ public class AudioManager : MonoBehaviour {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        Play("Theme");
+        if(!GameObject.Find("Theme(Clone)"))
+            Play("Theme");
     }
     public void Play(string name)
     {
@@ -31,7 +33,23 @@ public class AudioManager : MonoBehaviour {
             }
         }
     }
-
+    public bool GetSound() {
+        if (AudioListener.volume == 1)
+            return true;
+        else
+            return false;
+    }
+    public bool ToggleSound()
+    {
+        if (AudioListener.volume == 0)
+        {
+            AudioListener.volume = 1;
+        }
+        else {
+            AudioListener.volume = 0;
+        }
+        return GetSound();
+    }
     private void Update()
     {
         if (!Toggle.toggle)

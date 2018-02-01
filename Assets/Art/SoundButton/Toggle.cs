@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Toggle : MonoBehaviour {
@@ -10,17 +8,18 @@ public class Toggle : MonoBehaviour {
     Animator animator;
     void Start ()
     {
-        
-        GetComponent<Image>().sprite = On;
-        toggle = true;
-        animator = GetComponent<Animator>();
+        toggle = FindObjectOfType<AudioManager>().GetSound();
+        changeSprite();
     }
-
-    public void OnClick()
+    void changeSprite()
     {
-        toggle = !toggle;
-        Debug.Log("Toggled Sound: " + toggle);
         if (toggle) GetComponent<Image>().sprite = On;
         else GetComponent<Image>().sprite = Off;
+    }
+    public void OnClick()
+    {
+        toggle = FindObjectOfType<AudioManager>().ToggleSound();
+        changeSprite();
+        Debug.Log("Toggled Sound: " + toggle);
     }
 }

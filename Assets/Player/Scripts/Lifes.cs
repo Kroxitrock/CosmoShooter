@@ -120,7 +120,7 @@ public class Lifes : MonoBehaviour
                 }
                 break;
             case "EnemyMissle":
-                if (coll.gameObject.tag != "Enemy" && coll.gameObject.tag != "EnemyMissle" && coll.gameObject.tag != "Missle")
+                if (coll.gameObject.tag == "Player")
                 {
                         FindObjectOfType<Explosion>().hit(transform.position);
                         dropHealth();

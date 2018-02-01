@@ -7,7 +7,7 @@ public class DestroyAfter : MonoBehaviour
 
     IEnumerator destroy()
     {
-        yield return new WaitForSecondsRealtime(timer);
+        yield return new WaitForSeconds(timer);
         Destroy(gameObject);
     }
 
