@@ -11,6 +11,7 @@ public class Lifes : MonoBehaviour
     public static bool invPlayer;
     public static int killed;
     public static int PlayerLives;
+
     private void Start()
     {
         if(SpawnScript.stage >= 2)
@@ -116,7 +117,10 @@ public class Lifes : MonoBehaviour
                 if (coll.gameObject.tag != "Enemy" && coll.gameObject.tag != "EnemyMissle")
                 {
                     if ((transform.position.x <= 3.15 && transform.position.x >= -3.15) && (transform.position.y <= 5.05))
-                        dropHealth();
+                        {
+                            dropHealth();
+                            if (coll.gameObject.name.Contains("Rocket")) dropHealth();
+                        }
                 }
                 break;
             case "EnemyMissle":

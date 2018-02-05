@@ -9,6 +9,7 @@ public class CharacterController : MonoBehaviour{
     float timer;
     public static bool pousedForUpgrades;
     public static Vector2 PlayerPos;
+
     private void Awake()
     {
         soundToggle = GameObject.Find("SoundToggle");
@@ -28,12 +29,13 @@ public class CharacterController : MonoBehaviour{
         soundToggle.SetActive(true);
         pouseText.SetActive(true);
     }
+
     void setFalse(Vector2 pos)
     {
         soundToggle.SetActive(false);
         pouseText.SetActive(false);
         Time.timeScale = 1;
-        transform.position = pos;
+        transform.position = Vector2.MoveTowards(transform.position, pos, 0.5f);
     }
 
     void Update () {
@@ -51,7 +53,8 @@ public class CharacterController : MonoBehaviour{
 
                 if (poused)
                 {
-                    if ((pos.x <= transform.position.x + 0.5 && pos.x >= transform.position.x - 0.5) && (pos.y <= transform.position.y + 0.8 && pos.y >= transform.position.y - 0.8))
+                    if ((pos.x <= transform.position.x + 0.5 && pos.x >= transform.position.x - 0.5) 
+                        && (pos.y <= transform.position.y + 0.8 && pos.y >= transform.position.y - 0.8))
                     {
                         poused = false;
                         setFalse(pos);

@@ -12,9 +12,9 @@ public class RepeatingBackground : MonoBehaviour
     private void Update()
     {
         if(!CharacterController.poused)
-        if (transform.position.y > -3f*5f)
+        if (transform.position.y > -10.17f)
             RepositionBackground();
-        else transform.position = new Vector2(0,15);
+        else transform.position = new Vector2(0,10.17f);
     }
 
     //Moves the object this script is attached to right in order to create our looping background effect.

@@ -35,13 +35,6 @@ public class SpawnScript : MonoBehaviour {
         stage = 0;
         remaining = 0;
         ready = true;
-        stageSize = new int[6];
-        stageSize[0] = 0;
-        for (int i = 1; i < 6; i++)
-        {
-            stageSize[i] = ((i + 3) * 8);
-            Debug.Log("Stage " + i + ": " + stageSize[i]);
-        }
     }
 
     
