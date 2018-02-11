@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShootingBeamBoss : MonoBehaviour {
     public float cooldown;
+    public float ChargeTime;
+    public float HideTime;
     float timer;
     public GameObject beamHead;
     public GameObject beamBody;
@@ -14,7 +16,7 @@ public class ShootingBeamBoss : MonoBehaviour {
 	
 	void FixedUpdate () {
         timer -= Time.deltaTime;
-        if(timer <= 0.4f)
+        if(timer <= ChargeTime)
         {
             beamHead.SetActive(true);
         }
@@ -22,7 +24,7 @@ public class ShootingBeamBoss : MonoBehaviour {
         {
             beamBody.SetActive(true);
         }
-        if(timer <= -0.2f)
+        if(timer <= -HideTime)
         {
             beamHead.SetActive(false);
             beamBody.SetActive(false);

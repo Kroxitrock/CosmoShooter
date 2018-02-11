@@ -8,7 +8,7 @@ public class Bomb_drop : MonoBehaviour {
     Vector2 dir;
     private void Start()
     {
-        if (SpawnScript.stage > 1)
+        if (SpawnScript.stage > 3)
         {
             dir = CharacterController.PlayerPos * 10;
         }

@@ -14,15 +14,17 @@ public class Lifes : MonoBehaviour
 
     private void Start()
     {
+        if (gameObject.name.Contains("Boss") && SpawnScript.stage != 1 && SpawnScript.stage != 5)
+            lives += 10*SpawnScript.stage;
         if(SpawnScript.stage >= 2)
         {
-            if (gameObject.name == "TopEnemy(Clone)")
-                lives = 2;
+            if (gameObject.name.Contains("Fighter") || gameObject.name.Contains("Sniper"))
+                lives++;
         }
         if(SpawnScript.stage >= 4)
         {
-            if (gameObject.name.Contains("Zigzag"))
-                lives = 2;
+            if (gameObject.name.Contains("Zigzag") || gameObject.name.Contains("Bomber") || gameObject.name.Contains("Sniper"))
+                lives++;
         }
         if (gameObject.tag == "Player")
         {

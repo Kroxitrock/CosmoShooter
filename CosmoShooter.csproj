@@ -275,6 +275,7 @@
     <Compile Include="Assets\Player\Scripts\Shooting.cs" />
     <Compile Include="Assets\Player\Scripts\ShowDeathScreen.cs" />
     <Compile Include="Assets\Player\Scripts\Upgrades.cs" />
+    <Compile Include="Assets\Scene\Scrpts\ChangeToMain.cs" />
     <Compile Include="Assets\Scene\Scrpts\HighScore.cs" />
     <Compile Include="Assets\Scene\Scrpts\PlayAd.cs" />
     <Compile Include="Assets\Scene\Scrpts\Player.cs" />
